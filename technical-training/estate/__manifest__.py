@@ -8,7 +8,7 @@
     'author': 'Minh Nguyen Binh_ Intern BAP',        # Optional author name
     'website': 'https://bap.bemo-cloud.com/',  # Optional website
     'category': 'Custom',         # Optional category
-    'data': [],                   # List of data files (XML, CSV, etc.)
+    'data':['security/res_group.xml'],                   # List of data files (XML, CSV, etc.)
     'installable': True,          # Specify if the module is installable
     'application': True,         # Specify if it's an application
     'auto_install': False,

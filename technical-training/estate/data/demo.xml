@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <!-- Add code here-->
+        <record id="estate_property_1" model="estate.property">
+            <field name="name">Test 1 Villa</field>
+            <field name="description">A beautiful villa with sea view.</field>
+            <field name="postcode">00001</field>
+            <field name="date_availability">2024-10-10</field>
+            <field name="expected_price">100000.0</field>
+            <field name="selling_price">90000.0</field>
+            <field name="bedrooms">3</field>
+            <field name="living_area">150</field>
+            <field name="facades">2</field>
+            <field name="garage" eval="True"/>
+            <field name="garden" eval="True"/>            
+            <field name="garden_area">50</field>
+            <field name="garden_orientation">south</field>
+        </record>
+
+        <record id="estate_property_2" model="estate.property">
+            <field name="name">Test 2 Villa</field>
+            <field name="description">A beautiful villa with sea view.</field>
+            <field name="postcode">00002</field>
+            <field name="date_availability">2024-10-10</field>
+            <field name="expected_price">868686</field>
+            <field name="selling_price">686868</field>
+            <field name="bedrooms">3</field>
+            <field name="living_area">1500</field>
+            <field name="facades">2</field>
+            <field name="garage" eval="False"/>
+            <field name="garden" eval="False"/>            
+            <field name="garden_area">50</field>
+            <field name="garden_orientation">north</field>
+        </record>
     </data>
 </odoo>
