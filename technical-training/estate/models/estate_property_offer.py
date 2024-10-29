@@ -1,6 +1,8 @@
 from datetime import timedelta
 
-from odoo import models, fields, api
+from odoo import _, models, fields, api
+from odoo.exceptions import ValidationError
+
 
 
 class EstatePropertyOffer(models.Model):
@@ -64,3 +66,15 @@ class EstatePropertyOffer(models.Model):
                     record.validity = 7  
             else:
                 record.validity = 7  
+
+    def write(self, vals):
+        # Kiểm tra trạng thái
+        if 'status' in vals and vals['status'] == 'accepted':
+            raise ValidationError(_("Cannot Edit/Delete Offer Accepted"))
+        return super(EstatePropertyOffer, self).write(vals)
+
+    def unlink(self):
+        for offer in self:
+            if offer.status == 'accepted':
+                raise ValidationError(_("Cannot Edit/Delete Offer Accepted"))
+        return super(EstatePropertyOffer, self).unlink()

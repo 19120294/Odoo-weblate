@@ -5,6 +5,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" string="Title" />
+                <field name="code" readonly="1"/>
                 <field name="postcode" string="Postcode" />
                 <field name="bedrooms" string="Bedrooms" />
                 <field name="living_area" string="Living Area" />
@@ -28,6 +29,7 @@
                             <field name="name" string="Name" required="1" style="font-size:40px;" />
                             <field name="tag_ids" widget="many2many_tags"/>
                             <field name="property_type_id" string="Property Type" />
+                            <field name="code" readonly="1"/>
                             <field name="postcode" string="Postcode" />
                             <field name="date_availability" string="Date Availability" />
                         </group>
@@ -110,4 +112,11 @@
         <field name="res_model">estate.property</field>
         <field name="view_mode">tree,form</field>
     </record>
+
+    <record id="seq_estate_property_code" model="ir.sequence">
+        <field name="name">Property Code</field>
+        <field name="code">estate.property.code</field>
+        <field name="prefix">EPT</field>
+        <field name="padding">5</field>
+    </record>   
 </odoo>

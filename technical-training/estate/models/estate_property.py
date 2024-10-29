@@ -95,3 +95,12 @@ class EstateProperty(models.Model):
         for record in self:
             if record.date_availability and record.date_availability < fields.Date.today():
                 raise ValidationError('The availability date cannot be in the past.')
+            
+        
+    code = fields.Char(string='Code', readonly=True, copy=False)
+    @api.model
+    def create(self, vals):
+        if 'code' not in vals or vals['code'] == '':
+            sequence = self.env['ir.sequence'].next_by_code('estate.property.code') or 'EPT00001'
+            vals['code'] = sequence
+        return super(EstateProperty, self).create(vals)
