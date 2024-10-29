@@ -11,6 +11,8 @@
                 <field name="expected_price" string="Expected Price" />
                 <field name="selling_price" string="Selling Price" />
                 <field name="date_availability" string="Date Availability" />
+                <field name="property_type_id" string="Property Type" />
+                <field name="tag_ids" widget="many2many_tags"/>
             </tree>
         </field>
     </record>
@@ -23,7 +25,9 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="name" string="Name" required="1" style="font-size:50px;" />
+                            <field name="name" string="Name" required="1" style="font-size:40px;" />
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="property_type_id" string="Property Type" />
                             <field name="postcode" string="Postcode" />
                             <field name="date_availability" string="Date Availability" />
                         </group>
@@ -34,18 +38,42 @@
                     </group>
                     <notebook>
                         <page string="Description">
+                            <group>
+                                <field name="description" string="Description" />
+                                <field name="bedrooms" string="Bedrooms" />
+                                <field name="living_area" string="Living Area" />
+                                <field name="garage" string="Garage" />
+                                <field name="garden" string="Garden" />
+                                <field name="garden_area" string="Garden Area" />
+                                <field name="total_area" readonly="1"/>
+                                <field name="best_price" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Offers">
+                            <field name="offer_ids" widget="one2many_list">
+                                <tree>
+                                    <field name="price"/>
+                                    <field name="partner_id"/>
+                                    <field name="status"/>
+                                </tree>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <field name="price"/>
+                                            <field name="partner_id"/>
+                                            <field name="status"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Other Info">
+                            <group>
+                                <field name="buyer_id" string="Buyer"/>
+                                <field name="salesperson_id" string="Salesperson"/>
+                            </group>
                         </page>
                     </notebook>
-
-                    <group>
-                        <field name="description" string="Description" />
-                        <field name="bedrooms" string="Bedrooms" />
-                        <field name="living_area" string="Living Area" />
-                        <field name="garage" string="Garage" />
-                        <field name="garden" string="Garden" />
-                        <field name="garden_area" string="Garden Area" />
-                    </group>
-
                 </sheet>
             </form>
         </field>
@@ -62,12 +90,16 @@
                 <field name="bedrooms" />
                 <field name="living_area" />
                 <field name="facades" />
+                <field name="property_type_id" />
 
-                <filter string="New Properties" name="new_properties" domain="[('state', '=', 'new')]"/>
-                <filter string="Offer Received" name="offer_received" domain="[('state', '=', 'offer_received')]"/> 
-                
+                <filter string="New Properties" name="new_properties"
+                    domain="[('state', '=', 'new')]" />
+                <filter string="Offer Received" name="offer_received"
+                    domain="[('state', '=', 'offer_received')]" />
+
                 <group string="Group By">
-                    <filter string="Postcode" name="group_by_postcode" context="{'group_by': 'postcode'}" />
+                    <filter string="Postcode" name="group_by_postcode"
+                        context="{'group_by': 'postcode'}" />
                 </group>
             </search>
         </field>
