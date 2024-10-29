@@ -97,4 +97,22 @@
             <field name="garden_orientation">north</field>
         </record>
     </data>
+
+    <data noupdate="0">
+        <record id="estate_property_1" model="estate.property">
+            <field name="name">Luxury Sea View Villa Update</field>
+            <field name="description">A stunning villa with breathtaking sea views and modern amenities.</field>
+            <field name="postcode">00001</field>
+            <field name="date_availability">2025-12-01</field>
+            <field name="expected_price">1200000</field>
+            <field name="selling_price">1100000</field>
+            <field name="bedrooms">4</field>
+            <field name="living_area">2500</field>
+            <field name="facades">3</field>
+            <field name="garage" eval="True"/>
+            <field name="garden" eval="True"/>
+            <field name="garden_area">100</field>
+            <field name="garden_orientation">south</field>
+        </record>
+    </data>
 </odoo>
