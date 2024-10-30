@@ -78,3 +78,15 @@ class EstatePropertyOffer(models.Model):
             if offer.status == 'accepted':
                 raise ValidationError(_("Cannot Edit/Delete Offer Accepted"))
         return super(EstatePropertyOffer, self).unlink()
+    
+    # def action_accept(self):
+    #     for offer in self:
+    #         if offer.property_id.state == 'sold':
+    #             raise UserError("This property has already been sold.")
+    #         offer.property_id.buyer_id = offer.buyer_id
+    #         offer.property_id.selling_price = offer.selling_price
+    #         offer.property_id.state = 'sold'
+
+    # def action_refuse(self):
+    #     for offer in self:
+    #         pass

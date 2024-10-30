@@ -52,6 +52,18 @@ class EstateProperty(models.Model):
         copy=False,
         default="new",
     )
+    # def action_sold(self):
+    #     for record in self:
+    #         if record.state == 'cancelled':
+    #             raise UserError("Cannot set a cancelled property as sold.")
+    #         record.state = 'sold'
+
+    # def action_cancel(self):
+    #     for record in self:
+    #         if record.state == 'sold':
+    #             raise UserError("Cannot cancel a sold property.")
+    #         record.state = 'cancelled'
+    
     total_area = fields.Float(compute='_compute_total_area', string='Total Area', store=True)
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
