@@ -16,3 +16,10 @@ class EstatePropertyType(models.Model):
             existing = self.search([('name', '=', record.name)], limit=1)
             if existing and existing.id != record.id:
                 raise ValidationError("The name must be unique, ignoring case.")
+                
+            existing_case_insensitive = self.search([
+                ('id', '!=', record.id),
+                ('name', 'ilike', record.name)  
+            ], limit=1)
+            if existing_case_insensitive:
+                raise ValidationError("The name must be unique, ignoring case.")
