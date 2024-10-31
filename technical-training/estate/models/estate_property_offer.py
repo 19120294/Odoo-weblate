@@ -1,9 +1,7 @@
 from datetime import timedelta
 
 from odoo import _, models, fields, api
-from odoo.exceptions import ValidationError
-
-
+from odoo.exceptions import UserError, ValidationError
 
 class EstatePropertyOffer(models.Model):
     _name = "estate.property.offer"
@@ -67,7 +65,7 @@ class EstatePropertyOffer(models.Model):
             else:
                 record.validity = 7  
 
-    def write(self, vals):
+    def update(self, vals):
         # Kiểm tra trạng thái
         if 'status' in vals and vals['status'] == 'accepted':
             raise ValidationError(_("Cannot Edit/Delete Offer Accepted"))
@@ -81,12 +79,57 @@ class EstatePropertyOffer(models.Model):
     
     # def action_accept(self):
     #     for offer in self:
-    #         if offer.property_id.state == 'sold':
-    #             raise UserError("This property has already been sold.")
-    #         offer.property_id.buyer_id = offer.buyer_id
-    #         offer.property_id.selling_price = offer.selling_price
-    #         offer.property_id.state = 'sold'
+    #         if offer.status == 'accepted':
+    #             raise UserError("This offer has already been accepted.")
 
-    # def action_refuse(self):
-    #     for offer in self:
-    #         pass
+    #         # Cập nhật trạng thái offer
+    #         offer.status = 'accepted'
+            
+    #         # Cập nhật tài sản tương ứng
+    #         property = offer.property_id
+            
+    #         # Cập nhật giá bán và người mua cho tài sản
+    #         accepted_offers = property.offer_ids.filtered(lambda o: o.status == 'accepted')
+    #         property.selling_price = sum(accepted_offers.mapped('price'))
+            
+    #         # Lấy thông tin người mua từ offer cuối cùng được chấp nhận
+    #         last_accepted_offer = accepted_offers[-1] if accepted_offers else False
+    #         if last_accepted_offer:
+    #             property.buyer_id = last_accepted_offer.partner_id
+    
+    def action_accept(self):
+        if self.status == 'accepted':
+            raise UserError("This offer has already been accepted.")
+
+        # Cập nhật trạng thái offer
+        self.status = 'accepted'
+        
+        # Cập nhật tài sản tương ứng
+        property = self.property_id
+        
+        # Cập nhật giá bán và người mua cho tài sản
+        accepted_offers = property.offer_ids.filtered(lambda o: o.status == 'accepted')
+        property.selling_price = sum(accepted_offers.mapped('price'))
+        
+        # Lấy thông tin người mua từ offer cuối cùng được chấp nhận
+        last_accepted_offer = accepted_offers[-1] if accepted_offers else False
+        if last_accepted_offer:
+            property.buyer_id = last_accepted_offer.partner_id
+
+                
+    def action_refuse(self):
+        self.status = 'refused'
+        # Cập nhật tài sản tương ứng
+        property = self.property_id
+        
+        # Cập nhật giá bán và người mua cho tài sản
+        accepted_offers = property.offer_ids.filtered(lambda o: o.status == 'accepted')
+        property.selling_price = sum(accepted_offers.mapped('price'))
+        
+        # Lấy thông tin người mua từ offer cuối cùng được chấp nhận
+        last_accepted_offer = accepted_offers[-1] if accepted_offers else False
+        if last_accepted_offer:
+            property.buyer_id = last_accepted_offer.partner_id
+
+
+   

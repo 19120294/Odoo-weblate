@@ -9,6 +9,9 @@ class EstatePropertyTag(models.Model):
         string='Tag Name', 
         required=True
     )
+    _sql_constraints = [
+        ('tag_name_unique', 'UNIQUE(name)', 'The tag name must be unique.')
+    ]
     @api.constrains('name')
     def _check_name_unique_case_insensitive(self):
         for record in self:

@@ -9,6 +9,25 @@ class EstatePropertyType(models.Model):
         string='Name', 
         required=True
     )
+    offer_ids = fields.One2many(
+        'estate.property.offer',
+        'property_type_id',
+        string='Offers'
+    )
+    offer_count = fields.Integer(
+        string='Number of Offers',
+        compute='_compute_offer_count',
+        store=True
+    )
+
+    @api.depends('offer_ids')
+    def _compute_offer_count(self):
+        for record in self:
+            record.offer_count = len(record.offer_ids)
+    
+    _sql_constraints = [
+        ('type_name_unique', 'UNIQUE(name)', 'The property type name must be unique.')
+    ]
     
     @api.constrains('name')
     def _check_name_unique_case_insensitive(self):

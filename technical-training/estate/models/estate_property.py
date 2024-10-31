@@ -52,17 +52,6 @@ class EstateProperty(models.Model):
         copy=False,
         default="new",
     )
-    # def action_sold(self):
-    #     for record in self:
-    #         if record.state == 'cancelled':
-    #             raise UserError("Cannot set a cancelled property as sold.")
-    #         record.state = 'sold'
-
-    # def action_cancel(self):
-    #     for record in self:
-    #         if record.state == 'sold':
-    #             raise UserError("Cannot cancel a sold property.")
-    #         record.state = 'cancelled'
     
     total_area = fields.Float(compute='_compute_total_area', string='Total Area', store=True)
     @api.depends('living_area', 'garden_area')
@@ -74,7 +63,7 @@ class EstateProperty(models.Model):
     @api.depends('offer_ids.price')
     def _compute_best_price(self):
         for property in self:
-            property.best_price = max(property.offer_ids.mapped('price'), default=0.0)        
+            property.best_price = max(property.offer_ids.mapped('price'), default=0)        
     
     @api.onchange('garden')
     def _onchange_garden(self):
@@ -116,3 +105,27 @@ class EstateProperty(models.Model):
             sequence = self.env['ir.sequence'].next_by_code('estate.property.code') or 'EPT00001'
             vals['code'] = sequence
         return super(EstateProperty, self).create(vals)
+    
+    def action_sold(self):
+        for record in self:
+            if record.state == 'canceled':
+                raise UserError("Cannot mark as sold, the property is cancelled.")
+            record.state = 'sold'
+
+    def action_cancel(self):
+        for record in self:
+            if record.state == 'sold':
+                raise UserError("Cannot cancel a sold property.")
+            record.state = 'canceled'
+            
+    @api.constrains('selling_price', 'expected_price')
+    def _check_selling_price(self):
+        for record in self:
+            if record.selling_price > 0 and record.selling_price < 0.9 * record.expected_price:
+                raise ValidationError("The selling price cannot be lower than 90% of the expected price.")            
+
+    _sql_constraints = [
+        ('check_expected_price_strictly_positive', 'CHECK(expected_price > 0)', 'The expected price must be strictly positive.'),
+        ('check_selling_price_positive', 'CHECK(selling_price >= 0)', 'The selling price must be positive.'),
+        ('check_offer_price_strictly_positive', 'CHECK(price >= 0)', 'The offer price must be strictly positive.')
+    ]
