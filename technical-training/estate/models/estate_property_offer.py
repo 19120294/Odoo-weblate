@@ -14,8 +14,10 @@ class EstatePropertyOffer(models.Model):
         [
             ("accepted", "Accepted"),
             ("refused", "Refused"),
+            ("new","New")
         ],
         string="Status",
+        default="new",
         copy=False,
     )
     partner_id = fields.Many2one(

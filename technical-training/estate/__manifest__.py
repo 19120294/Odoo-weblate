@@ -14,6 +14,7 @@
             'security/ir.model.access.csv',
             
             #view files
+            'wizard/confirm_cancel_estate_views.xml',
             'views/estate_property_offer_views.xml',
             'views/estate_property_views.xml', 
             'views/estate_property_type_views.xml',

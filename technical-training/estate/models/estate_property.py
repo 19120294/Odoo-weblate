@@ -52,7 +52,16 @@ class EstateProperty(models.Model):
         copy=False,
         default="new",
     )
-    
+    reason_cancel = fields.Text(string="Reason for Cancellation")
+
+    @api.depends('offer_ids.status')
+    def _compute_state(self):
+        for record in self:
+            if record.offer_ids:
+                if all(offer.status in ('accepted', 'refused') for offer in record.offer_ids):
+                    record.state = 'offer_accepted'
+                
+
     total_area = fields.Float(compute='_compute_total_area', string='Total Area', store=True)
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
@@ -116,7 +125,15 @@ class EstateProperty(models.Model):
         for record in self:
             if record.state == 'sold':
                 raise UserError("Cannot cancel a sold property.")
-            record.state = 'canceled'
+            # record.state = 'canceled'
+            return {
+                'name': 'Confirm Cancellation',
+                'type': 'ir.actions.act_window',
+                'res_model': 'confirm.cancel.wizard',
+                'view_mode': 'form',
+                'target': 'new',
+                'context': {'default_property_id': record.id}
+            }
             
     @api.constrains('selling_price', 'expected_price')
     def _check_selling_price(self):
@@ -124,7 +141,30 @@ class EstateProperty(models.Model):
             if record.selling_price > 0 and record.selling_price < 0.9 * record.expected_price:
                 raise ValidationError("The selling price cannot be lower than 90% of the expected price.")            
 
+    def action_create_offer(self):
+        if self.state != "new":
+            raise UserError("You can create offer")
+        self.state = 'offer_received'
+
     _sql_constraints = [
         ('check_expected_price_strictly_positive', 'CHECK(expected_price > 0)', 'The expected price must be strictly positive.'),
         ('check_selling_price_positive', 'CHECK(selling_price >= 0)', 'The selling price must be positive.'),
     ]
+    
+    # Thêm trường đếm
+    count_offer_accepted = fields.Integer(string='Count Offer Accepted', compute='_compute_count_offer_accepted', store=True)
+
+    @api.depends('offer_ids')
+    def _compute_count_offer_accepted(self):
+        for record in self:
+            record.count_offer_accepted = len(record.offer_ids.filtered(lambda offer: offer.status == 'accepted'))
+            
+    def action_view_accepted_offers(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Accepted Offers',
+            'view_mode': 'tree,form',
+            'res_model': 'estate.property.offer',
+            "domain": [("property_id","=",self.id),("status","=","accepted")],
+            'context': {'create': False},
+        }

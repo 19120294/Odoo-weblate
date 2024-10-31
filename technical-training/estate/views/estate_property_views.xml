@@ -5,7 +5,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" string="Title" />
-                <field name="code" readonly="1"/>
+                <field name="code" readonly="1" />
                 <field name="postcode" string="Postcode" />
                 <field name="bedrooms" string="Bedrooms" />
                 <field name="living_area" string="Living Area" />
@@ -13,7 +13,7 @@
                 <field name="selling_price" string="Selling Price" />
                 <field name="date_availability" string="Date Availability" />
                 <field name="property_type_id" string="Property Type" />
-                <field name="tag_ids" widget="many2many_tags"/>
+                <field name="tag_ids" widget="many2many_tags" />
             </tree>
         </field>
     </record>
@@ -24,26 +24,47 @@
         <field name="arch" type="xml">
             <form string="Property">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_accepted_offers"
+                            type="object"
+                            string="Accepted Offers"
+                            class="oe_highlight" />
+                        <field name="count_offer_accepted" string="Offer Accepted" widget="statinfo"/>
+                    </div>
                     <header>
-                        <button name="action_sold" type="object" string="Sold" class="btn-primary" 
-                                attrs="{'invisible': [('state', '=', 'sold')]}"/>
-                        <button name="action_cancel" type="object" string="Cancel" class="btn-danger" 
-                                attrs="{'invisible': [('state', '=', 'canceled')]}"/>
-                    
-                        <field name="state" invisible="1"/>
+                        <button name="action_sold"
+                            type="object"
+                            string="Sold"
+                            class="btn-primary"
+                            attrs="{'invisible': [('state', 'in', ['new', 'offer_received', 'sold', 'canceled'])]}" />
+
+                        <button name="action_cancel"
+                            type="object"
+                            string="Cancel"
+                            class="btn-danger"
+                            attrs="{'invisible': [('state', 'in', ['sold', 'canceled'])]}" />
+
+                        <button name="action_create_offer"
+                            type="object"
+                            string="Create Offer"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('state', '!=', 'new')]}" />
+                        <field name="state" invisible="1" />
                     </header>
                     <group>
                         <group>
                             <field name="name" string="Name" required="1" style="font-size:40px;" />
-                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="tag_ids" widget="many2many_tags" />
                             <field name="property_type_id" string="Property Type" />
-                            <field name="code" readonly="1"/>
+                            <field name="code" readonly="1" />
                             <field name="postcode" string="Postcode" />
                             <field name="date_availability" string="Date Availability" />
                         </group>
                         <group style="margin-top: 90px;">
                             <field name="expected_price" string="Expected Price" />
                             <field name="selling_price" string="Selling Price" readonly="1" />
+                            <field name="reason_cancel"
+                                attrs="{'invisible': [('state', '!=', 'canceled')]}" />
                         </group>
                     </group>
                     <notebook>
@@ -55,25 +76,27 @@
                                 <field name="garage" string="Garage" />
                                 <field name="garden" string="Garden" />
                                 <field name="garden_area" string="Garden Area" />
-                                <field name="total_area" readonly="1"/>
-                                <field name="best_price" readonly="1"/>
+                                <field name="total_area" readonly="1" />
+                                <field name="best_price" readonly="1" />
                             </group>
                         </page>
-                        <page string="Offers">
+                        <page string="Offers" attrs="{'invisible': [('state', '=', 'new')]}">
                             <field name="offer_ids" widget="one2many_list">
                                 <tree>
-                                    <field name="price"/>
-                                    <field name="partner_id"/>
-                                    <field name="status"/>
-                                    <button name="action_accept" type="object" string="Accept (v)" class="btn-success"/>
-                                    <button name="action_refuse" type="object" string="Refuse (x)" class="btn-danger"/>
+                                    <field name="price" />
+                                    <field name="partner_id" />
+                                    <field name="status" />
+                                    <button name="action_accept" type="object" string="Accept (v)"
+                                        class="btn-success" />
+                                    <button name="action_refuse" type="object" string="Refuse (x)"
+                                        class="btn-danger" />
                                 </tree>
                                 <form>
                                     <sheet>
                                         <group>
-                                            <field name="price"/>
-                                            <field name="partner_id"/>
-                                            <field name="status"/>
+                                            <field name="price" />
+                                            <field name="partner_id" />
+                                            <field name="status" />
                                         </group>
                                     </sheet>
                                 </form>
@@ -81,8 +104,8 @@
                         </page>
                         <page string="Other Info">
                             <group>
-                                <field name="buyer_id" string="Buyer"/>
-                                <field name="salesperson_id" string="Salesperson"/>
+                                <field name="buyer_id" string="Buyer" />
+                                <field name="salesperson_id" string="Salesperson" />
                             </group>
                         </page>
                     </notebook>
@@ -128,5 +151,5 @@
         <field name="code">estate.property.code</field>
         <field name="prefix">EPT</field>
         <field name="padding">5</field>
-    </record>   
+    </record>
 </odoo>
