@@ -49,8 +49,10 @@
                             string="Create Offer"
                             class="oe_highlight"
                             attrs="{'invisible': [('state', '!=', 'new')]}" />
-                        <field name="state" invisible="1" />
-                    </header>
+
+                        <field name="state" widget="statusbar" options="{'clickable':'1'}" />
+                                    
+                        </header>
                     <group>
                         <group>
                             <field name="name" string="Name" required="1" style="font-size:40px;" />
