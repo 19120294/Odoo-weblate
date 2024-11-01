@@ -28,11 +28,13 @@
                         <button name="action_view_accepted_offers"
                             type="object"
                             string="Accepted Offers"
-                            class="oe_highlight" />
+                            class="oe_highlight"
+                            icon ="fa-list"
+                            style="margin-right: 5px" />
                         <field name="count_offer_accepted" string="Offer Accepted" widget="statinfo"/>
                     </div>
-                    <header>
-                        <button name="action_sold"
+                    <header style="margin-top: -20px;">
+                        <button name="action_sold"  
                             type="object"
                             string="Sold"
                             class="btn-primary"
@@ -51,18 +53,17 @@
                             attrs="{'invisible': [('state', '!=', 'new')]}" />
 
                         <field name="state" widget="statusbar" options="{'clickable':'1'}" />
-                                    
-                        </header>
+                    </header>
                     <group>
-                        <group>
-                            <field name="name" string="Name" required="1" style="font-size:40px;" />
+                        <field name="code" readonly="1" />
+                        <field name="name" string="Name" required="1" style="font-size:25px; font-weight:bold;" />
+                        <group style="border-right: none !important;">
                             <field name="tag_ids" widget="many2many_tags" />
                             <field name="property_type_id" string="Property Type" />
-                            <field name="code" readonly="1" />
                             <field name="postcode" string="Postcode" />
                             <field name="date_availability" string="Date Availability" />
                         </group>
-                        <group style="margin-top: 90px;">
+                        <group style="margin-top: 45px;">
                             <field name="expected_price" string="Expected Price" />
                             <field name="selling_price" string="Selling Price" readonly="1" />
                             <field name="reason_cancel"
