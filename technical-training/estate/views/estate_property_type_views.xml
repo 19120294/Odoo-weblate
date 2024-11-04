@@ -1,0 +1,41 @@
+<odoo>
+    <record id="view_estate_property_type_tree" model="ir.ui.view">
+        <field name="name">estate.property.type.tree</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <tree string="Estate Property Type">
+                <field name="name" string="Name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_estate_property_type_form" model="ir.ui.view">
+        <field name="name">estate.property.type.form</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <form string="Estate Property Type">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="action" 
+                                name="%(estate.action_view_offers)d" 
+                                string="View Offers" 
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="offer_count" string="Offer Count"/>
+                        </button>
+                    </div>
+                    <!-- Các trường khác của form -->
+                    <group>
+                        <field name="name" string="Name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_property_type" model="ir.actions.act_window">
+        <field name="name">Property Types</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
