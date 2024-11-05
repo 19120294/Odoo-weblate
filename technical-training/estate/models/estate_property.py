@@ -168,3 +168,4 @@ class EstateProperty(models.Model):
             "domain": [("property_id","=",self.id),("status","=","accepted")],
             'context': {'create': False},
         }
+        

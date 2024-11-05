@@ -3,11 +3,15 @@
         <field name="name">estate.property.offer.tree</field>
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
-            <tree string="Property Offers">
+            <tree string="Property Offers"
+                    editable="bottom"
+                    decoration-success = "status == 'accepted'"
+                    decoration-danger = "status == 'refused'"
+                >
                 <field name="property_id" />
                 <field name="partner_id" />
                 <field name="price" />
-                <field name="status" />
+                <field name="status" invisible="1" />
                 <field name="property_type_id" readonly="1" />
                 <field name="validity" />
                 <field name="date_deadline" readonly="1" />

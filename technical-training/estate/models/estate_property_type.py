@@ -19,6 +19,7 @@ class EstatePropertyType(models.Model):
         compute='_compute_offer_count',
         store=True
     )
+    property_ids = fields.One2many('estate.property', 'property_type_id', string='Properties')
 
     @api.depends('offer_ids')
     def _compute_offer_count(self):
