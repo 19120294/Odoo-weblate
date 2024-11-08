@@ -1,7 +1,7 @@
 # models/estate_property.py
 import re
 
-from odoo import models, fields, api
+from odoo import _,  models, fields, api
 from odoo.exceptions import ValidationError
 
 class EstateProperty(models.Model):
