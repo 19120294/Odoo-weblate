@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+        <record id="email_template_property_sold" model="mail.template">
+            <field name="name">Property Sold Notification</field>
+            <field name="model_id" ref="model_estate_property" />
+            <field name="subject">Property ${object.name} Sold!</field>
+            <field name="email_to">${object.buyer_email}</field>
+            <field name="body_html">
+                <![CDATA[
+                <div>
+                    <p>Dear ${object.buyer_id.name},</p>
+                    <p>The property <strong>${object.name}</strong> that you bought is sold successfully by ${object.user_sold.name}.</p>
+                    <p>Thanks,</p>
+                </div>
+
+                ]]>
+            </field>
+        </record>
+    
+        <record id="email_template_offer_accepted" model="mail.template">
+            <field name="name">Offer Accepted Notification</field>
+            <field name="model_id" ref="estate.model_estate_property_offer" />
+            <field name="subject">Property Offer for ${object.property_id.name} Accepted!</field>
+            <field name="email_to">${object.partner_id.email}</field>
+            <field name="body_html">
+                <![CDATA[
+                    <p>Dear ${object.partner_id.name},</p>
+                    <p>The offer for property <strong>${object.property_id.name}</strong> that you proposed is accepted by ${object.user_accept.name}.</p>
+                    <p>Thanks,</p>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

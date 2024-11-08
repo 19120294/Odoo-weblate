@@ -6,7 +6,8 @@ from odoo.exceptions import ValidationError
 class EstateProperty(models.Model):
     _name = "estate.property"
     _description = "Estate Property"
-
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    
     property_type_id = fields.Many2one('estate.property.type', string='Property Type')
     buyer_id = fields.Many2one('res.partner', string='Buyer', copy=False)
     salesperson_id = fields.Many2one('res.users', string='Salesperson', default=lambda self: self.env.user)
@@ -169,3 +170,11 @@ class EstateProperty(models.Model):
             'context': {'create': False},
         }
         
+    
+    # Prevent deletion of a property if its state is not ‘New’ or ‘Canceled’
+    def unlink(self):
+        for record in self:
+            if record.state not in ('new', 'canceled'):
+                raise UserError("You can only delete properties in 'New' or 'Canceled' state.")
+        
+        return super(EstateProperty, self).unlink()

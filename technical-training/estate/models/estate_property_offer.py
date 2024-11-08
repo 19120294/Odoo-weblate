@@ -56,17 +56,29 @@ class EstatePropertyOffer(models.Model):
                     days=record.validity
                 )
 
+    # @api.onchange("date_deadline")
+    # def _inverse_date_deadline(self):
+    #     for record in self:
+    #         if record.date_deadline:
+    #             if record.create_date:
+    #                 record.validity = (record.date_deadline - record.create_date).days
+    #             else:
+    #                 record.validity = 7  
+    #         else:
+    #             record.validity = 7  
+
     @api.onchange("date_deadline")
     def _inverse_date_deadline(self):
         for record in self:
             if record.date_deadline:
                 if record.create_date:
-                    record.validity = (record.date_deadline - record.create_date).days
+                    # Chuyển đổi create_date sang date để tính toán chính xác
+                    record.validity = (record.date_deadline - record.create_date.date()).days
                 else:
                     record.validity = 7  
             else:
                 record.validity = 7  
-
+                
     def update(self, vals):
         # Kiểm tra trạng thái
         if 'status' in vals and vals['status'] == 'accepted':
@@ -137,3 +149,16 @@ class EstatePropertyOffer(models.Model):
     _sql_constraints = [
         ('check_offer_price_strictly_positive', 'CHECK(price >= 0)', 'The offer price must be strictly positive.')
     ]
+    
+    @api.model
+    def create(self, vals):
+        if vals.get('property_id'):
+            property_id = self.env['estate.property'].browse(vals['property_id'])
+            
+            existing_offer = property_id.offer_ids.filtered(lambda o: o.price > vals.get('price', 0))
+            if existing_offer:
+                raise UserError("Cannot create an offer lower than an existing offer.")
+            
+            property_id.state = 'offer_received'
+
+        return super(EstatePropertyOffer, self).create(vals)
