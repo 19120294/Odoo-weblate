@@ -1,0 +1,90 @@
+<odoo>
+
+    <!-- Tree View cho estate.property.report -->
+    <record id="view_estate_property_report_tree" model="ir.ui.view">
+        <field name="name">estate.property.report.tree</field>
+        <field name="model">estate.property.report</field>
+        <field name="arch" type="xml">
+            <tree string="Property Buyers Report">
+                <field name="buyer_id" />
+                <field name="property_count" />
+                <field name="offer_accepted_count" />
+                <field name="offer_rejected_count" />
+                <field name="max_price" />
+                <field name="min_price" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View cho estate.property.report -->
+    <record id="view_estate_property_report_form" model="ir.ui.view">
+        <field name="name">estate.property.report.form</field>
+        <field name="model">estate.property.report</field>
+        <field name="arch" type="xml">
+            <form string="Property Buyers Report">
+                <sheet>
+                    <group>
+                        <field name="buyer_id" />
+                        <field name="property_count" />
+                        <field name="offer_accepted_count" />
+                        <field name="offer_rejected_count" />
+                    </group>
+                    <group>
+                        <field name="max_price" />
+                        <field name="min_price" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Form View for Buyer Offer Report XLSX Wizard -->
+    <record id="estate.view_buyer_offer_report_wizard" model="ir.ui.view">
+        <field name="name">estate.property.report.wizard.form</field>
+        <field name="model">estate.property.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Buyer Offer Report XLSX">
+                <group>
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="buyer_id" widget="many2many_tags" />
+                </group>
+                <footer>
+                    <button string="Export" type="object" name="action_export_xlsx"
+                        class="btn-primary" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- sql rp -->
+    <record id="estate_property_report_action" model="ir.actions.act_window">
+        <field name="name">Property Buyers Report</field>
+        <field name="res_model">estate.property.report</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action "Buyer Offer Report XLSX" -->
+    <record id="estate.action_buyer_offer_report_xlsx" model="ir.actions.act_window">
+        <field name="name">Buyer Offer Report XLSX</field>
+        <field name="res_model">estate.property.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="estate.view_buyer_offer_report_wizard" />
+    </record>
+<!-- 
+    <record id="estate.action_property_report_xlsx" model="ir.actions.report">
+        <field name="name">Property Buyers Report (XLSX)</field>
+        <field name="model">estate.property.report</field>
+        <field name="report_name">estate.report_property_xlsx</field>
+        <field name="report_type">xlsx</field>
+    </record> -->
+
+    <!-- <record id="estate.action_property_report_xlsx" model="ir.actions.report">
+        <field name="name">Property Buyers Report (XLSX)</field>
+        <field name="model">estate.property</field>
+        <field name="report_name">estate.report_property_xlsx</field>
+        <field name="report_type">xlsx</field>
+    </record> -->
+    
+</odoo> 

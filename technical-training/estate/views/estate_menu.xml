@@ -7,7 +7,7 @@
 
     <menuitem
         id="menu_estate_properties"
-        name="Estate" 
+        name="Estate"
         parent="menu_estate_root"
         sequence="10"
     />
@@ -54,7 +54,30 @@
         id="menu_estate_property_offer"
         name="Property Offers"
         parent="menu_estate_advertisement"
-        action="action_estate_property_offer" 
+        action="action_estate_property_offer"
         sequence="100"
+    />
+
+    <menuitem
+        id="menu_estate_reporting"
+        name="Reporting"
+        parent="menu_estate_root"
+        sequence="13"
+    />
+
+    <menuitem
+        id="menu_estate_property_report"
+        name="Buyer Offer Report"
+        parent="menu_estate_reporting"
+        action="estate_property_report_action"
+        sequence="100"
+    />
+
+    <menuitem 
+        id="menu_estate_property_report_xlsx"
+        name="Buyer Offer Report XLSX"
+        parent="menu_estate_reporting"
+        action="estate.action_buyer_offer_report_xlsx" 
+        sequence="101"
     />
 </odoo>
