@@ -1,16 +1,16 @@
 from odoo import fields, models, tools
-# import logging
-
-# _logger = logging.getLogger(__name__)
-
-
 class EstatePropertyReport(models.Model):
     _name = "estate.property.report"
     _description = "Property Buyers Report"
     _auto = False  # Đặt _auto thành False để cho biết đây là bảng view SQL
 
     # Các trường trong view
-    buyer_id = fields.Many2one("res.partner", string="Buyer")
+    buyer_id = fields.Many2one("res.partner", string="Buyer", readonly= False)
+    email = fields.Char(
+        related="buyer_id.email", 
+        string="Email", 
+        readonly=True
+    )
     property_count = fields.Integer(string="Property Count", readonly=True)
     properties_accepted = fields.Integer(string='Accepted Properties')
     properties_sold = fields.Integer(string='Sold Properties')
