@@ -3,7 +3,8 @@
     'version': '1.0',             # Version of your module
     'license': 'LGPL-3',          # License type (e.g., LGPL-3, MIT, etc.)
     'depends': ['base',
-                'mail'],          # List of dependencies (for now, specify the base module)
+                'mail',
+                'report_xlsx'],          # List of dependencies (for now, specify the base module)
     'demo': [],
     'description': 'Module Estate for lession 2',  # Optional description
     'author': 'Minh Nguyen Binh_ Intern BAP',        # Optional author name

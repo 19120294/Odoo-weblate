@@ -68,18 +68,31 @@ class EstatePropertyReportWizard(models.TransientModel):
 
     start_date = fields.Date(string="Start Date", required=True)
     end_date = fields.Date(string="End Date", required=True)
-    buyer_id = fields.Many2many("res.partner", string="Buyers", required=True)
+    buyer_id = fields.Many2one("res.partner", string="Buyers", required=True)
 
     def action_export_xlsx(self):
         # Kiểm tra ngày bắt đầu và ngày kết thúc
         if self.start_date > self.end_date:
             raise UserError("Start Date must be before End Date!")
 
-        buyer_ids = ','.join(map(str, self.buyer_id.ids))
+        start_date = self.start_date
+        end_date = self.end_date
+        buyer_id = self.buyer_id.id if self.buyer_id else None  
+        # buyer_ids = ','.join(map(str, self.buyer_id.ids))
         
-        # Trả về hành động URL để gọi controller
+        if buyer_id:
+            url = f'/estate/property_report_xlsx?start_date={start_date}&end_date={end_date}&buyer_id={buyer_id}'
+        else:
+            url = f'/estate/property_report_xlsx?start_date={start_date}&end_date={end_date}'
+
         return {
-            "type": "ir.actions.act_url",
-            "url": f"/estate/property_report_xlsx?start_date={self.start_date}&end_date={self.end_date}&buyer_id={buyer_ids}",
-            "target": "self",
+            'type': 'ir.actions.act_url',
+            'url': url,
+            'target': 'self',  
         }
+        # Trả về hành động URL để gọi controller
+        # return {
+        #     "type": "ir.actions.act_url",
+        #     "url": f"/estate/property_report_xlsx?start_date={self.start_date}&end_date={self.end_date}&buyer_id={buyer_ids}",
+        #     "target": "self",
+        # }

@@ -47,7 +47,7 @@
                 <group>
                     <field name="start_date" />
                     <field name="end_date" />
-                    <field name="buyer_id" widget="many2many_tags" />
+                    <field name="buyer_id"/>
                 </group>
                 <footer>
                     <button string="Export" type="object" name="action_export_xlsx"
@@ -70,6 +70,7 @@
         <field name="name">Buyer Offer Report XLSX</field>
         <field name="res_model">estate.property.report.wizard</field>
         <field name="view_mode">form</field>
+        <field name ="target">new</field>
         <field name="view_id" ref="estate.view_buyer_offer_report_wizard" />
     </record>
 <!-- 
