@@ -12,13 +12,13 @@ class EstatePropertyReportXlsx(models.AbstractModel):
     _name = "estate.property_report_xlsx"
     _inherit = "report.report_xlsx.abstract"
 
-    def create_xlsx_report(self, data):
+    def create_xlsx_report(self, start_date, end_date, buyer_ids):
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
 
-        buyer_id = data.get('buyer_id')  # A specific buyer ID, or None if all buyers
-        start_date = data.get('start_date')
-        end_date = data.get('end_date')
+        # buyer_id = data.get('buyer_id')  # A specific buyer ID, or None if all buyers
+        # start_date = data.get('start_date')
+        # end_date = data.get('end_date')
 
         worksheet = workbook.add_worksheet('Buyer Offer Report')
         title_format = workbook.add_format({'bold': True, 'align': 'center', 'font_size': 12, 'border': 0})
@@ -75,10 +75,10 @@ class EstatePropertyReportXlsx(models.AbstractModel):
         # Add filter for multiple buyer_ids if provided
         buyer_filter = ""
         params = [start_date, end_date, start_date, end_date, start_date, end_date, start_date, end_date, start_date, end_date, start_date, end_date]
-        if buyer_id:
+        if buyer_ids:
             # Prepare a placeholder for each buyer_id in the IN clause
-            buyer_filter = "AND rp.id IN ({})".format(','.join(['%s'] * len(buyer_id)))
-            params.extend(buyer_id)
+            buyer_filter = "AND rp.id IN ({})".format(','.join(['%s'] * len(buyer_ids)))
+            params.extend(buyer_ids)
 
         # Execute query
         self.env.cr.execute(query.format(buyer_filter=buyer_filter), tuple(params))

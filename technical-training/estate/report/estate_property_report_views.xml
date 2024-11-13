@@ -47,7 +47,7 @@
                 <group>
                     <field name="start_date" />
                     <field name="end_date" />
-                    <field name="buyer_id"/>
+                    <field name="buyer_ids" widget="many2many_tags"/>
                 </group>
                 <footer>
                     <button string="Export" type="object" name="action_export_xlsx"
