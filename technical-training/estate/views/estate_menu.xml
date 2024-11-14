@@ -67,7 +67,7 @@
 
     <menuitem
         id="menu_estate_property_report"
-        name="Buyer Offer Report"
+        name="Property Buyer Report"
         parent="menu_estate_reporting"
         action="estate_property_report_action"
         sequence="100"

@@ -28,6 +28,32 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form string="Property">
+                <header>
+                    <button name="action_sold"
+                        type="object"
+                        string="Sold"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state', 'in', ['sold', 'canceled'])]}" />
+                    <!-- attrs="{'invisible': [('state', 'in', ['new', 'offer_received', 'sold',
+                    'canceled'])]}"  lesson 5.2 -->
+
+
+                    <button name="action_cancel"
+                        type="object"
+                        string="Cancel"
+                        class="btn-danger"
+                        attrs="{'invisible': [('state', 'in', ['sold', 'canceled'])]}" />
+                    <!-- attrs="{'invisible': [('state', 'in', ['sold', 'canceled'])]}" lesson
+                    5.2 -->
+
+                    <button name="action_create_offer"
+                        type="object"
+                        string="Create Offer"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('state', '!=', 'new')]}" />
+
+                    <field name="state" widget="statusbar" options="{'clickable':'1'}" />
+                </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button name="action_view_accepted_offers"
@@ -41,32 +67,7 @@
                             widget="statinfo " 
                             style="margin-right: 15px" />
                     </div>
-                    <header style="margin-top: -20px;">
-                        <button name="action_sold"
-                            type="object"
-                            string="Sold"
-                            class="btn-primary"
-                            attrs="{'invisible': [('state', 'in', ['sold', 'canceled'])]}" />
-                        <!-- attrs="{'invisible': [('state', 'in', ['new', 'offer_received', 'sold',
-                        'canceled'])]}"  lesson 5.2 -->
-
-
-                        <button name="action_cancel"
-                            type="object"
-                            string="Cancel"
-                            class="btn-danger"
-                            attrs="{'invisible': [('state', 'in', ['sold', 'canceled'])]}" />
-                        <!-- attrs="{'invisible': [('state', 'in', ['sold', 'canceled'])]}" lesson
-                        5.2 -->
-
-                        <button name="action_create_offer"
-                            type="object"
-                            string="Create Offer"
-                            class="oe_highlight"
-                            attrs="{'invisible': [('state', '!=', 'new')]}" />
-
-                        <field name="state" widget="statusbar" options="{'clickable':'1'}" />
-                    </header>
+                    
                     <group>
                         <field name="code" readonly="1" />
                         <field name="name" string="Name" required="1"
@@ -100,7 +101,6 @@
                                 <field name="best_price" readonly="1" />
                             </group>
                         </page>
-                        <!-- attrs="{'invisible': [('state', '=', 'new')]}"  lesson 5.2 -->
                         <page string="Offers">
                             <field name="offer_ids" widget="one2many_list"
                                 attrs="{'readonly': [('state', 'in', ['offer_accepted', 'sold', 'canceled'])]}"
@@ -112,14 +112,12 @@
                                     <field name="date_deadline" />
                                     <button name="action_accept"
                                         type="object"
-                                        string="Accept (v)"
-                                        class="btn-success"
-                                        attrs="{'invisible': [('status', '!=', False)]}" />
+                                        icon="fa-check"
+                                    />
                                     <button name="action_refuse"
                                         type="object"
-                                        string="Refuse (x)"
-                                        class="btn-danger"
-                                        attrs="{'invisible': [('status', '!=', False)]}" />
+                                        icon="fa-times"
+                                    />
                                     <field name="status" />
                                 </tree>
                                 <form>

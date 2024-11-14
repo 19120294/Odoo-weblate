@@ -9,10 +9,8 @@ class EstateProperty(models.Model):
 
     buyer_email = fields.Char(
         string="Buyer Email",
-        required=True,
-        store=True,
-        default="test@mail.com",
         help="Buyer email",
+        required=False
     )
     user_sold = fields.Many2one(
         'res.users',

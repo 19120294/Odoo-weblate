@@ -3,9 +3,7 @@
     'version': '1.0',
     'category': 'Estate',
     'author': 'Minh Nguyen Binh_Intern BAP',
-    'depends': ['estate', 
-                'mail',
-                'base'],
+    'depends': ['estate'],
     'data': [
         'views/estate_property_views.xml',
         'data/email_templates.xml',

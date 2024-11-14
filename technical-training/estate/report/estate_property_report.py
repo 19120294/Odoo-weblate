@@ -29,7 +29,7 @@ class EstatePropertyReport(models.Model):
                 SELECT
                     row_number() OVER () AS id,
                     rp.id AS buyer_id,
-                    COUNT(ep.id) AS property_count,
+                    COUNT(DISTINCT ep.id) AS property_count,
                     SUM(CASE WHEN eo.status = 'accepted' THEN 1 ELSE 0 END) AS offer_accepted_count,
                     SUM(CASE WHEN eo.status = 'refused' THEN 1 ELSE 0 END) AS offer_rejected_count,
                     MAX(eo.price) AS max_price,
