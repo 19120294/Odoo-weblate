@@ -73,11 +73,18 @@
         sequence="100"
     />
 
-    <menuitem 
+    <menuitem
         id="menu_estate_property_report_xlsx"
         name="Buyer Offer Report XLSX"
         parent="menu_estate_reporting"
-        action="estate.action_buyer_offer_report_xlsx" 
+        action="estate.action_buyer_offer_report_xlsx"
         sequence="101"
     />
+    <!-- Menu con cho Demo Widget -->
+    <menuitem 
+        id="menu_demo_widget"
+        name="Demo Widget"
+        parent="menu_estate_root"
+        action="action_demo_widget"
+        sequence="14" />
 </odoo>
