@@ -23,7 +23,7 @@
         <field name="arch" type="xml">
             <!-- <tree> -->
             <!-- <tree js_class="button_widget"> -->
-            <tree js_class="button_widget">
+            <tree js_class="combined_widget">
                 <field name="name" />
                 <field name="color" widget="custom_color_widget" />
                 <field name="date" widget="date_widget" />
