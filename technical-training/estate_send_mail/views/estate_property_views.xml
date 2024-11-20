@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <!-- Inherit Property Form View -->
+        <record id="view_property_form_inherit_send_mail" model="ir.ui.view">
+            <field name="name">estate.property.form.inherit.send.mail</field>
+            <field name="model">estate.property</field>
+            <field name="inherit_id" ref="estate.view_estate_property_form"/>
+            <field name="arch" type="xml">
+                <!-- Thêm field buyer_email -->
+                <xpath expr="//field[@name='buyer_id']" position="after">
+                    <field name="buyer_email"/>
+                </xpath>
+
+                <!-- Thêm button Send Mail -->
+                <xpath expr="//button[@name='action_sold']" position="after">
+                    <button name="send_mail_to_buyer" type="object" string="Send Mail" 
+                            attrs="{'invisible': [('state', '!=', 'sold')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
