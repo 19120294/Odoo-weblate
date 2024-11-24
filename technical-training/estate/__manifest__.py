@@ -28,6 +28,7 @@
         "views/estate_user_views.xml",
         "views/templates_widget.xml",
         "views/demo_widget_views.xml",
+        "views/estate_property_templates.xml",
         # wizard
         "wizard/views/confirm_cancel_estate_views.xml",
         "wizard/views/estate_property_report_views.xml",

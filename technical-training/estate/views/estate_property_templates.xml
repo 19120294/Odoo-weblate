@@ -1,0 +1,153 @@
+<odoo>
+    <template id="estate_pages" name="Estate Page">
+        <t t-call="website.layout">
+            <div class="container mt-4">
+                <h1 class="text-center mb-4">Danh sách bất động sản</h1>
+    
+                <!-- Form tìm kiếm -->
+                <form method="get" class="d-flex mb-4">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        placeholder="Tìm kiếm bất động sản..."
+                        t-att-value="search"
+                        class="form-control me-2" 
+                        style="max-width: 300px;" />
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                </form>
+    
+                <!-- Danh sách bất động sản -->
+                <div class="row">
+                    <t t-if="estates">
+                        <t t-foreach="estates" t-as="estate">
+                            <div class="col-md-4 mb-4">
+                                <div class="card shadow-sm">
+                                    <!-- Hình ảnh bất động sản -->
+                                    <img 
+                                        t-att-src="'/web/image/estate.estate/' + str(estate.id) + '/image_1920'" 
+                                        alt="Estate Image" 
+                                        class="card-img-top" 
+                                        style="height: 200px; object-fit: cover;" />
+    
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <a t-att-href="'/estates/%d' % estate.id" class="text-dark">
+                                                <t t-esc="estate.name" />
+                                            </a>
+                                        </h5>
+                                        <p class="card-text">
+                                            <t t-if="estate.description">
+                                                <t t-esc="estate.description[:100]" />...
+                                            </t>
+                                            <t t-else="">
+                                                <span>Không có mô tả</span>
+                                            </t>
+                                        </p>
+                                        <a 
+                                            t-att-href="'/estates/%d' % estate.id" 
+                                            class="btn btn-info btn-sm">Xem chi tiết</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <div class="col-12">
+                            <p class="text-center">Không tìm thấy bất động sản nào.</p>
+                        </div>
+                    </t>
+                </div>
+    
+                <!-- Phân trang -->
+                <div class="d-flex justify-content-between mt-4">
+                    <t t-if="page > 1">
+                        <a 
+                            t-att-href="'/estate_property?page=%d&amp;search=%s' % (page-1, search or '')" 
+                            class="btn btn-secondary">Trước</a>
+                    </t>
+                    <t t-if="page * estates_per_page &lt; total_estates">
+                        <a 
+                            t-att-href="'/estate_property?page=%d&amp;search=%s' % (page+1, search)" 
+                            class="btn btn-secondary">Sau</a>
+                    </t>                    
+                </div>
+            </div>
+        </t>
+    </template>
+    
+    <template id="estate_details" name="Estate Details">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h1 class="text-center mb-4">Chi tiết bất động sản</h1>
+                <div class="row">
+                    <!-- Tên bất động sản -->
+                    <div class="col-md-12 mb-3">
+                        <h2><t t-esc="estate.name" /></h2>
+                    </div>
+
+                    <!-- Mô tả bất động sản -->
+                    <div class="col-md-12 mb-3">
+                        <h5><strong>Mô tả:</strong></h5>
+                        <p><t t-esc="estate.description" /></p>
+                    </div>
+
+                    <!-- Giá dự kiến và Giá bán -->
+                    <div class="col-md-6 mb-3">
+                        <h5><strong>Giá dự kiến:</strong> <t t-esc="estate.expected_price" /> VND</h5>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h5><strong>Giá bán:</strong> 
+                            <t t-if="estate.selling_price">
+                                <t t-esc="estate.selling_price" /> VND
+                            </t>
+                            <t t-else="">
+                                Chưa bán
+                            </t>
+                        </h5>
+                    </div>
+
+                    <!-- Số phòng ngủ và diện tích sống -->
+                    <div class="col-md-6 mb-3">
+                        <h5><strong>Số phòng ngủ:</strong> <t t-esc="estate.bedrooms" /></h5>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h5><strong>Diện tích sống:</strong> <t t-esc="estate.living_area" /> m²</h5>
+                    </div>
+
+                    <!-- Số mặt tiền và có sân vườn -->
+                    <div class="col-md-6 mb-3">
+                        <h5><strong>Số mặt tiền:</strong> <t t-esc="estate.facades" /></h5>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h5><strong>Có sân vườn:</strong> 
+                            <t t-if="estate.garden">
+                                Có
+                            </t>
+                            <t t-else="">
+                                Không
+                            </t>
+                        </h5>
+                    </div>
+
+                    <!-- Ngày có sẵn và trạng thái -->
+                    <div class="col-md-6 mb-3">
+                        <h5><strong>Ngày có sẵn:</strong> <t t-esc="estate.date_availability" /></h5>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h5><strong>Trạng thái:</strong> <t t-esc="estate.state" /></h5>
+                    </div>
+
+                    <!-- Số lượng lời đề nghị đã chấp nhận -->
+                    <div class="col-md-6 mb-3">
+                        <h5><strong>Lời đề nghị đã chấp nhận:</strong> <t t-esc="estate.count_offer_accepted" /></h5>
+                    </div>
+
+                    <!-- Quay lại danh sách -->
+                    <div class="col-md-12 mb-3 text-center">
+                        <a href="/estate_property" class="btn btn-secondary">Quay lại danh sách</a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
