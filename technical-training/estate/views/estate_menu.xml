@@ -81,10 +81,20 @@
         sequence="101"
     />
     <!-- Menu con cho Demo Widget -->
-    <menuitem 
+    <menuitem
         id="menu_demo_widget"
         name="Demo Widget"
         parent="menu_estate_root"
         action="action_demo_widget"
-        sequence="14" />
+        sequence="14" 
+    />
+
+    <menuitem 
+        id="menu_feedback"
+        name="Manage Feedback" 
+        parent="menu_estate_root"
+        action="action_feedback"
+        sequence="15"
+    />
+
 </odoo>

@@ -1,0 +1,31 @@
+<odoo>
+    <template id="feedback_form" name="Feedback Form">
+        <section class="snippet_feedback_section">
+            <div class="container">
+                <div class="feedback_content">
+                    <div class="feedback_title">
+                        <h1>Feedback Form</h1>
+                    </div>
+                    <form action="/feedback/submit" method="post">
+                        <textarea class="form-control feedback_input" name="description"
+                            placeholder="Write your feedback here..." required="required" />
+                        <button type="submit" class="btn btn-primary mt-3">Gửi đi</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="thank_you_page" name="Thank You Page">
+        <div class="container text-center mt-5">
+            <h2>Thank you for your feedback!</h2>
+            <p>We appreciate your input and will use it to improve our services.</p>
+        </div>
+    </template>
+
+    <template id="feedback_snippet" name="Feedback Snippet" inherit_id="website.snippets">
+        <xpath expr="//div[@id='snippet_content']/div[hasclass('o_panel_body')]" position="inside">
+            <t t-snippet="estate.feedback_form" />
+        </xpath>
+    </template>
+</odoo> 

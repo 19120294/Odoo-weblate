@@ -12,4 +12,19 @@
         </xpath>
     </template>
 
+    <template id="assets_frontend" name="custom assets" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css"
+                href="/estate/static/src/scss/custom_primary_color.scss" />
+        </xpath>
+    </template>
+
+    <template id="assets_frontend" name="custom assets" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css"
+                href="/estate/static/src/scss/custom_navbar.scss" />
+        </xpath>
+    </template>
+
+
 </odoo>

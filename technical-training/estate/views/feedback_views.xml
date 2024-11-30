@@ -1,0 +1,34 @@
+<odoo>
+    <record model="ir.ui.view" id="view_feedback_tree">
+        <field name="name">Feedback Tree</field>
+        <field name="model">website.user.feedback</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="description"/>
+                <field name="create_datetime"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_feedback_form">
+        <field name="name">Feedback Form</field>
+        <field name="model">website.user.feedback</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="description"/>
+                        <field name="create_datetime"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_feedback" model="ir.actions.act_window">
+        <field name="name">Feedback</field>
+        <field name="res_model">website.user.feedback</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

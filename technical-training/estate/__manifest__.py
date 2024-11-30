@@ -6,6 +6,7 @@
         "base",
         "mail",
         "report_xlsx",
+        "website",
         "web",
     ],  # List of dependencies (for now, specify the base module)
     "demo": [],
@@ -29,6 +30,8 @@
         "views/templates_widget.xml",
         "views/demo_widget_views.xml",
         "views/estate_property_templates.xml",
+        "views/feedback_snippet.xml",
+        "views/feedback_views.xml",
         # wizard
         "wizard/views/confirm_cancel_estate_views.xml",
         "wizard/views/estate_property_report_views.xml",
