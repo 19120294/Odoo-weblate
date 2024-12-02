@@ -1,20 +1,22 @@
-    /* Đổi màu primary thành #0c3255 */
-.o_primary_color {
-    background-color: #0c3255 !important;
-    border-color: #0c3255 !important;
-}
+//     /* Đổi màu primary thành #0c3255 */
+// .o_primary_color {
+//     background-color: #0c3255 !important;
+//     border-color: #0c3255 !important;
+// }
 
-.o_btn_primary {
-    background-color: #0c3255 !important;
-    border-color: #0c3255 !important;
-}
+// .o_btn_primary {
+//     background-color: #0c3255 !important;
+//     border-color: #0c3255 !important;
+// }
 
-.o_field_widget .o_field_radio input[type="radio"]:checked, .o_field_widget .o_field_checkbox input[type="checkbox"]:checked {
-    background-color: #0c3255 !important;
-}
+// .o_field_widget .o_field_radio input[type="radio"]:checked, .o_field_widget .o_field_checkbox input[type="checkbox"]:checked {
+//     background-color: #0c3255 !important;
+// }
 
-.o_website_title {
-    color: #0c3255 !important;
-}
+// .o_website_title {
+//     color: #0c3255 !important;
+// }
+$o-community-color: #0C3255;
 
-
+$o-brand-odoo: $o-community-color;
+$o-brand-primary: $o-community-color;
