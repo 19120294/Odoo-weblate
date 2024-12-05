@@ -32,6 +32,7 @@
         "views/estate_property_templates.xml",
         "views/feedback_snippet.xml",
         "views/feedback_views.xml",
+        "views/homepage_views.xml",
         # wizard
         "wizard/views/confirm_cancel_estate_views.xml",
         "wizard/views/estate_property_report_views.xml",
