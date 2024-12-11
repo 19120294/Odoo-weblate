@@ -4,10 +4,10 @@
     "license": "LGPL-3",  # License type (e.g., LGPL-3, MIT, etc.)
     "depends": [
         "base",
-        "mail",
-        "report_xlsx",
         "website",
         "web",
+        "mail",
+        "report_xlsx",
     ],  # List of dependencies (for now, specify the base module)
     "demo": [],
     "description": "Module Estate for lession 2",  # Optional description
